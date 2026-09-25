@@ -1,0 +1,53 @@
+﻿@model Donation
+@{
+    ViewData["Title"] = "Donate";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <h1 class="display-6 fw-bold mb-3">Donate to the response</h1>
+            <form asp-action="Create" method="post" class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                    <div class="btn-group w-100 mb-4" role="group" aria-label="Donation frequency">
+                        <input type="radio" class="btn-check" name="IsRecurring" id="once" value="false" checked>
+                        <label class="btn btn-outline-success" for="once">One-time</label>
+                        <input type="radio" class="btn-check" name="IsRecurring" id="monthly" value="true">
+                        <label class="btn btn-outline-success" for="monthly">Monthly (recurring)</label>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-7">
+                            <label asp-for="Amount" class="form-label">Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R / $ / €</span>
+                                <input asp-for="Amount" type="number" min="1" step="0.01" class="form-control" placeholder="250.00">
+                            </div>
+                            <span asp-validation-for="Amount" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-5">
+                            <label asp-for="Currency" class="form-label">Currency</label>
+                            <select asp-for="Currency" class="form-select">
+                                <option value="ZAR">ZAR — Rand</option>
+                                <option value="USD">USD — Dollar</option>
+                                <option value="EUR">EUR — Euro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="DonorName" class="form-label">Name on certificate (optional)</label>
+                        <input asp-for="DonorName" class="form-control" id="donorName">
+                    </div>
+                    <div class="form-check form-switch mb-4">
+                        <input asp-for="IsAnonymous" class="form-check-input" type="checkbox" role="switch" id="anon"
+                               onchange="document.getElementById('donorName').disabled = this.checked">
+                        <label class="form-check-label" for="anon">Donate anonymously</label>
+                    </div>
+                    <button type="submit" class="btn btn-gotg btn-lg w-100">Donate now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

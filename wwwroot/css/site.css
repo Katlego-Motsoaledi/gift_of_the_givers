@@ -1,0 +1,28 @@
+:root {
+    --gotg-green: #00614A;
+    --gotg-gold: #FDB913;
+}
+
+.gotg-navbar {
+    background: var(--gotg-green);
+}
+
+.gotg-hero {
+    background: var(--gotg-green);
+}
+
+.gotg-gold {
+    color: var(--gotg-gold);
+}
+
+.btn-gotg {
+    background: var(--gotg-gold);
+    border: 0;
+    color: #1d1d1d;
+    font-weight: 600;
+}
+
+    .btn-gotg:hover {
+        background: #e0a40f;
+        color: #1d1d1d;
+    }

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Current Response Efforts";
+}
+<div class="gotg-hero text-white py-5">
+    <div class="container">
+        <div class="text-uppercase small gotg-gold mb-2">Live response status</div>
+        <h1 class="display-5 fw-bold">Where we're responding right now</h1>
+        <p class="col-lg-6 opacity-75">Track active relief efforts, find your nearest relief centre, and sign up to volunteer where help is needed most.</p>
+        <div class="row g-4 mt-1">
+            <div class="col-auto"><div class="fs-2 fw-bold gotg-gold">@ViewBag.ActiveCount</div><div class="small text-uppercase opacity-75">Active responses</div></div>
+            <div class="col-auto"><div class="fs-2 fw-bold gotg-gold">@ViewBag.Centres.Count</div><div class="small text-uppercase opacity-75">Relief centres open</div></div>
+            <div class="col-auto"><div class="fs-2 fw-bold gotg-gold">@ViewBag.TotalCapacity</div><div class="small text-uppercase opacity-75">People we can support</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="h4 mb-3">Current Incidents</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        @foreach (var i in (List<Incident>)ViewBag.Incidents)
+        {
+            var colour = i.Status == "Active" ? "danger" : i.Status == "Monitoring" ? "warning" : "success";
+            <div class="col">
+                <div class="card h-100 border-start border-4 border-@colour">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h3 class="h5">@i.IncidentName</h3>
+                            <span class="badge bg-@colour">@i.Status</span>
+                        </div>
+                        <div class="text-muted small">@i.Location &middot; @i.IncidentType</div>
+                        <div class="text-muted small mt-2"><code>GOTG-2026-@i.IncidentID.ToString("D3")</code> &middot; Since @i.StartDate.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container pb-5">
+    <h2 class="h4 mb-3">Relief Centres</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        @foreach (var c in (List<ReliefCentre>)ViewBag.Centres)
+        {
+            <div class="col">
+                <div class="card h-100 bg-light">
+                    <div class="card-body">
+                        <h4 class="h6 fw-bold">@c.CentreName</h4>
+                        <div class="text-muted small">@c.Location</div>
+                        <div class="progress mt-2" style="height:6px"><div class="progress-bar bg-success" style="width:100%"></div></div>
+                        <div class="text-muted small mt-2">Capacity: @c.Capacity</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="text-center mt-5">
+        <a class="btn btn-gotg btn-lg px-5" asp-controller="Volunteers" asp-action="Index">Sign up to volunteer</a>
+    </div>
+</div>

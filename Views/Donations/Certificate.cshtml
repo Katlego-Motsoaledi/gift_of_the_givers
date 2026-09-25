@@ -1,0 +1,25 @@
+﻿@model Donation
+@{
+    ViewData["Title"] = "Tax Certificate";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-success border-2 shadow-sm">
+                <div class="card-body p-5 text-center">
+                    <i class="bi bi-heart-fill gotg-gold fs-1" aria-hidden="true"></i>
+                    <h1 class="h4 mt-2">Gift of the Givers Foundation</h1>
+                    <div class="text-uppercase small text-muted">Placeholder Tax Certificate (Section 18A)</div>
+                    <hr class="my-4">
+                    <p>Certificate No: <strong>@Model.CertificateNumber</strong></p>
+                    <p>Received from: <strong>@Model.DonorName</strong></p>
+                    <p>Amount: <strong>@Model.Currency @Model.Amount.ToString("N2")</strong> (@(Model.IsRecurring ? "monthly recurring" : "one-time"))</p>
+                    <p>Date: <strong>@Model.CreatedAt.ToString("dd MMMM yyyy")</strong></p>
+                    <p class="small text-muted">Placeholder certificate for prototype purposes (symbolic values).</p>
+                    <button class="btn btn-outline-success me-2" onclick="window.print()"><i class="bi bi-download"></i> Download PDF</button>
+                    <a class="btn btn-gotg" asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

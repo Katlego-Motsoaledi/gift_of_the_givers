@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-1">GOTG Login</h1>
+                    <p class="text-muted small mb-3">Gift of the Givers — Disaster Relief Coordination</p>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger py-2">@ViewBag.Error</div>
+                    }
+                    <form method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <button class="btn btn-gotg w-100" type="submit">Sign in</button>
+                    </form>
+                    <p class="text-muted small mt-3 mb-0">Demo: employee@giftofthegivers.org or donor@giftofthegivers.org · Gotg#2026!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

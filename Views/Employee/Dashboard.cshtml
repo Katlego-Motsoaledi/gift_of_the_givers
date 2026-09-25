@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Employee Dashboard";
+}
+<div class="container-fluid py-4">
+    <h1 class="h3">Operations Dashboard</h1>
+    <p class="text-muted">Signed in as @User.Identity!.Name (Employee role).</p>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h6 text-uppercase">Incidents</h2>
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-light"><tr><th>Code</th><th>Incident</th><th>Location</th><th>Status</th></tr></thead>
+                        <tbody>
+                            @foreach (var i in (List<Incident>)ViewBag.Incidents)
+                            {
+                                var c = i.Status == "Active" ? "danger" : i.Status == "Monitoring" ? "warning" : "success";
+                                <tr>
+                                    <td><code>GOTG-2026-@i.IncidentID.ToString("D3")</code></td>
+                                    <td>@i.IncidentName</td>
+                                    <td>@i.Location</td>
+                                    <td><span class="badge bg-@c">@i.Status</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <h2 class="h6 text-uppercase mt-4">Volunteer sign-ups</h2>
+                    @if (!((List<Volunteer>)ViewBag.Volunteers).Any())
+                    {
+                        <p class="text-muted small">No volunteer sign-ups yet — new registrations will appear here.</p>
+                    }
+                    else
+                    {
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light"><tr><th>Name</th><th>Contact</th><th>Skills</th><th>Availability</th></tr></thead>
+                            <tbody>
+                                @foreach (var v in (List<Volunteer>)ViewBag.Volunteers)
+                                {
+                                    <tr><td>@v.FirstName @v.LastName</td><td><code>@v.Phone</code></td><td>@v.SkillSet</td><td>@v.Availability</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h6 text-uppercase">Post a relief update</h2>
+                    <form asp-action="PostUpdate" method="post">
+                        <div class="mb-2">
+                            <label class="form-label" for="IncidentID">Incident</label>
+                            <select name="IncidentID" id="IncidentID" class="form-select">
+                                @foreach (var i in (List<Incident>)ViewBag.Incidents)
+                                {
+                                    <option value="@i.IncidentID">@i.IncidentName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="Message">Update</label>
+                            <textarea name="Message" id="Message" rows="3" class="form-control" required></textarea>
+                        </div>
+                        <button class="btn btn-gotg w-100">Post update</button>
+                    </form>
+                    <h2 class="h6 text-uppercase mt-4">Recent updates</h2>
+                    @foreach (var u in (List<ReliefUpdate>)ViewBag.Updates)
+                    {
+                        <div class="border-start border-3 border-success ps-2 mb-2 small">
+                            @u.Message <div class="text-muted">@u.PostedBy · @u.PostedAt.ToString("dd MMM HH:mm")</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
